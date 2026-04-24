@@ -2,7 +2,7 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #0f172a;
 }
 
 @theme inline {
@@ -10,17 +10,46 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
+  --color-primary-50: #f4f8fb;
+  --color-primary-100: #e8f0f7;
+  --color-primary-200: #cbdfed;
+  --color-primary-300: #adcce2;
+  --color-primary-400: #71a8cd;
+  --color-primary: #3b719f;
+  --color-primary-500: #3b719f;
+  --color-primary-600: #35668f;
+  --color-primary-700: #2c5577;
+  --color-primary-800: #23445f;
+  --color-primary-900: #1d384e;
+  --color-primary-950: #122331;
+  --color-primary-light: var(--color-primary-400);
+  --color-primary-dark: var(--color-primary-800);
+  
+  --color-accent-50: #fdf8eb;
+  --color-accent-100: #fbf1d6;
+  --color-accent-200: #f5dfa8;
+  --color-accent-300: #efcb79;
+  --color-accent-400: #eaae35;
+  --color-accent: #f0a828;
+  --color-accent-500: #f0a828;
+  --color-accent-600: #d89724;
+  --color-accent-700: #b47e1e;
+  --color-accent-800: #906518;
+  --color-accent-900: #765314;
+  --color-accent-950: #48320c;
+  --color-accent-light: var(--color-accent-400);
+  --color-accent-dark: var(--color-accent-700);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans), Arial, Helvetica, sans-serif;
   }
-}
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  h1, h2, h3, h4, h5, h6 {
+    color: var(--color-primary);
+  }
 }
