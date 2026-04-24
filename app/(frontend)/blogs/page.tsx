@@ -34,7 +34,7 @@ export default async function BlogsPage() {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {blogs.map((blog: any) => (
-                <div key={blog.id} className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden flex flex-col group hover:shadow-xl transition-all">
+                <Link key={blog.id} href={`/blogs/${blog.slug}`} className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden flex flex-col group hover:shadow-xl transition-all">
                   <div className="aspect-[16/10] bg-gray-200 relative overflow-hidden">
                     {blog.cover_image ? (
                       <Image 
@@ -60,12 +60,12 @@ export default async function BlogsPage() {
                     </h3>
                     <p className="text-gray-600 mb-6 line-clamp-3 flex-1">{blog.excerpt}</p>
                     <div className="mt-auto">
-                      <div className="text-primary font-bold flex items-center gap-2 group-hover:gap-3 transition-all">
+                      <span className="text-primary font-bold flex items-center gap-2 group-hover:gap-3 transition-all">
                         Read Article <ArrowRight className="w-4 h-4" />
-                      </div>
+                      </span>
                     </div>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
           )}
