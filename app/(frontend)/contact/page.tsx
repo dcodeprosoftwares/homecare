@@ -38,7 +38,7 @@ export default async function ContactPage() {
                   <div>
                     <strong className="block text-gray-900 mb-1">Our Location</strong>
                     <span>
-                      {address.split('\n').map((line, i) => (
+                      {address.split('\n').map((line: string, i: number) => (
                         <span key={i}>{line}<br /></span>
                       ))}
                     </span>
@@ -69,7 +69,7 @@ export default async function ContactPage() {
                   <div>
                     <strong className="block text-gray-900 mb-1">Working Hours</strong>
                     <span>
-                      {workingHours.split('\n').map((line, i) => (
+                      {workingHours.split('\n').map((line: string, i: number) => (
                         <span key={i}>{line}<br /></span>
                       ))}
                     </span>
