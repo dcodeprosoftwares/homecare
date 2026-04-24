@@ -3,7 +3,7 @@ import Image from "next/image";
 import { ArrowRight, CheckCircle2, HeartPulse, Activity, Users, Star, PhoneCall, Shield, Clock } from "lucide-react";
 import { getServices } from "@/app/actions/services";
 
-export const revalidate = 3600;
+export const revalidate = 60; // Refresh every 60 seconds
 
 // Fallback icons map
 const IconMap: Record<string, any> = {
