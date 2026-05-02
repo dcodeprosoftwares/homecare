@@ -1,5 +1,6 @@
 import { getGallery } from "@/app/actions/gallery";
 import Image from "next/image";
+import { toDirectImageUrl, isGoogleDriveUrl } from "@/lib/utils";
 
 export const revalidate = 3600;
 
@@ -35,9 +36,10 @@ export default async function GalleryPage() {
                 <div key={item.id} className="break-inside-avoid bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden group">
                   <div className="relative overflow-hidden bg-gray-100 aspect-square">
                     <Image 
-                      src={item.image_url} 
+                      src={toDirectImageUrl(item.image_url)} 
                       alt={item.title || "Gallery photo"} 
                       fill
+                      unoptimized={isGoogleDriveUrl(item.image_url)}
                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                       className="object-cover group-hover:scale-105 transition-transform duration-500"
                     />

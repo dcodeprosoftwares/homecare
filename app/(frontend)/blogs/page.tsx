@@ -2,6 +2,7 @@ import { getBlogs } from "@/app/actions/blogs";
 import Link from "next/link";
 import { ArrowRight, Calendar, User } from "lucide-react";
 import Image from "next/image";
+import { toDirectImageUrl, isGoogleDriveUrl } from "@/lib/utils";
 
 export const revalidate = 3600;
 
@@ -38,9 +39,10 @@ export default async function BlogsPage() {
                   <div className="aspect-[16/10] bg-gray-200 relative overflow-hidden">
                     {blog.cover_image ? (
                       <Image 
-                        src={blog.cover_image} 
+                        src={toDirectImageUrl(blog.cover_image)} 
                         alt={blog.title} 
                         fill
+                        unoptimized={isGoogleDriveUrl(blog.cover_image)}
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                         className="object-cover group-hover:scale-105 transition-transform duration-500" 
                       />

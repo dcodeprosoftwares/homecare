@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { ArrowLeft, Calendar, User } from "lucide-react";
 import { notFound } from "next/navigation";
+import { toDirectImageUrl, isGoogleDriveUrl } from "@/lib/utils";
 
 export const revalidate = 3600;
 
@@ -52,9 +53,10 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
         <div className="mx-auto max-w-4xl w-full px-4 lg:px-8 -mt-8 relative z-10">
           <div className="aspect-[16/7] rounded-2xl overflow-hidden shadow-2xl relative">
             <Image
-              src={blog.cover_image}
+              src={toDirectImageUrl(blog.cover_image)}
               alt={blog.title}
               fill
+              unoptimized={isGoogleDriveUrl(blog.cover_image)}
               className="object-cover"
               priority
               sizes="(max-width: 1200px) 100vw, 896px"

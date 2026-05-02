@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useState } from "react";
 import { createGalleryItem, deleteGalleryItem } from "@/app/actions/gallery";
 import { Trash2, Plus, X } from "lucide-react";
+import { toDirectImageUrl } from "@/lib/utils";
 
 type GalleryItem = {
   id: string;
@@ -58,7 +59,7 @@ export default function GalleryClient({ initialItems }: { initialItems: GalleryI
             <div key={item.id} className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden group">
               <div className="aspect-square bg-gray-100 relative">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={item.image_url} alt={item.title || "Gallery image"} className="w-full h-full object-cover" />
+                <img src={toDirectImageUrl(item.image_url)} alt={item.title || "Gallery image"} className="w-full h-full object-cover" />
                 <button 
                   onClick={() => handleDelete(item.id)}
                   className="absolute top-2 right-2 bg-red-500 text-white p-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity"
