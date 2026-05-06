@@ -2,8 +2,25 @@ import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, CheckCircle2, HeartPulse, Activity, Users, Star, PhoneCall, Shield, Clock } from "lucide-react";
 import { getServices } from "@/app/actions/services";
+import type { Metadata } from "next";
+import { canonicalUrl } from "@/lib/seo";
 
 export const revalidate = 60; // Refresh every 60 seconds
+
+export const metadata: Metadata = {
+  title: "Home Healthcare Services in Dehradun | TrueCare Health At Home",
+  description:
+    "TrueCare Health At Home delivers professional home nursing, elderly care, physiotherapy & post-surgery care in Dehradun, Uttarakhand. Certified staff, 24/7 support. Book a free assessment today.",
+  alternates: {
+    canonical: canonicalUrl("/"),
+  },
+  openGraph: {
+    title: "TrueCare Health At Home — Professional Home Healthcare in Dehradun",
+    description:
+      "Hospital-quality healthcare at your doorstep. Skilled nursing, elderly care, physiotherapy — all in the comfort of your home in Dehradun.",
+    url: canonicalUrl("/"),
+  },
+};
 
 // Fallback icons map
 const IconMap: Record<string, any> = {

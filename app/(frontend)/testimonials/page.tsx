@@ -1,11 +1,23 @@
 import { getTestimonials } from "@/app/actions/testimonials";
 import { Star, Quote } from "lucide-react";
+import type { Metadata } from "next";
+import { canonicalUrl } from "@/lib/seo";
 
 export const revalidate = 3600;
 
-export const metadata = {
-  title: "Testimonials | TrueCare Health At Home",
-  description: "Read what our patients and their families have to say about our care.",
+export const metadata: Metadata = {
+  title: "Patient Testimonials — What Our Families Say",
+  description:
+    "Read genuine testimonials from families and patients who trust TrueCare Health At Home for professional home healthcare services in Dehradun.",
+  alternates: {
+    canonical: canonicalUrl("/testimonials"),
+  },
+  openGraph: {
+    title: "Patient Testimonials — TrueCare Health At Home",
+    description:
+      "Real stories from the families we've had the privilege to serve in Dehradun. See why patients rate us 4.9/5.",
+    url: canonicalUrl("/testimonials"),
+  },
 };
 
 export default async function TestimonialsPage() {

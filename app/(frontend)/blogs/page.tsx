@@ -3,12 +3,24 @@ import Link from "next/link";
 import { ArrowRight, Calendar, User } from "lucide-react";
 import Image from "next/image";
 import { toDirectImageUrl, isGoogleDriveUrl } from "@/lib/utils";
+import type { Metadata } from "next";
+import { canonicalUrl } from "@/lib/seo";
 
 export const revalidate = 3600;
 
-export const metadata = {
-  title: "Health & Care Blogs | TrueCare",
-  description: "Read the latest news, tips, and insights on health and home care.",
+export const metadata: Metadata = {
+  title: "Health & Care Blog — Tips, Insights & News",
+  description:
+    "Read expert health tips, home care insights, and the latest news from TrueCare Health At Home in Dehradun. Stay informed about home healthcare best practices.",
+  alternates: {
+    canonical: canonicalUrl("/blogs"),
+  },
+  openGraph: {
+    title: "Health & Care Blog — TrueCare Health At Home",
+    description:
+      "Expert advice, health tips, and company news from the TrueCare team in Dehradun.",
+    url: canonicalUrl("/blogs"),
+  },
 };
 
 export default async function BlogsPage() {

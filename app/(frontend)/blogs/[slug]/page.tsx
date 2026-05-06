@@ -5,12 +5,70 @@ import Image from "next/image";
 import { ArrowLeft, Calendar, User } from "lucide-react";
 import { notFound } from "next/navigation";
 import { toDirectImageUrl, isGoogleDriveUrl } from "@/lib/utils";
+import type { Metadata } from "next";
+import { canonicalUrl, generateBlogPostingJsonLd, generateBreadcrumbJsonLd, SITE_URL } from "@/lib/seo";
+import JsonLd from "@/components/JsonLd";
 
 export const revalidate = 3600;
 
 export async function generateStaticParams() {
   const blogs = await getBlogs();
   return blogs.map((blog: any) => ({ slug: blog.slug }));
+}
+
+// Dynamic metadata based on blog content
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+
+  const { data: blog } = await supabase
+    .from("blogs")
+    .select("*")
+    .eq("slug", slug)
+    .single();
+
+  if (!blog) {
+    return { title: "Blog Post Not Found" };
+  }
+
+  const description =
+    blog.excerpt ||
+    (blog.content ? blog.content.substring(0, 160).replace(/<[^>]*>/g, "") + "..." : "");
+
+  return {
+    title: blog.title,
+    description,
+    alternates: {
+      canonical: canonicalUrl(`/blogs/${blog.slug}`),
+    },
+    openGraph: {
+      type: "article",
+      title: blog.title,
+      description,
+      url: canonicalUrl(`/blogs/${blog.slug}`),
+      publishedTime: blog.published_at,
+      authors: [blog.author_name || "TrueCare Team"],
+      images: blog.cover_image
+        ? [
+            {
+              url: toDirectImageUrl(blog.cover_image),
+              width: 1200,
+              height: 630,
+              alt: blog.title,
+            },
+          ]
+        : [],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: blog.title,
+      description,
+      images: blog.cover_image ? [toDirectImageUrl(blog.cover_image)] : [],
+    },
+  };
 }
 
 export default async function BlogDetailPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -24,8 +82,28 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
 
   if (!blog) notFound();
 
+  // Structured data
+  const blogPostJsonLd = generateBlogPostingJsonLd({
+    title: blog.title,
+    slug: blog.slug,
+    excerpt: blog.excerpt,
+    content: blog.content,
+    cover_image: blog.cover_image ? toDirectImageUrl(blog.cover_image) : undefined,
+    author_name: blog.author_name,
+    published_at: blog.published_at,
+  });
+
+  const breadcrumbJsonLd = generateBreadcrumbJsonLd([
+    { name: "Home", url: SITE_URL },
+    { name: "Blogs", url: canonicalUrl("/blogs") },
+    { name: blog.title, url: canonicalUrl(`/blogs/${blog.slug}`) },
+  ]);
+
   return (
     <div className="flex flex-col">
+      <JsonLd data={blogPostJsonLd} />
+      <JsonLd data={breadcrumbJsonLd} />
+
       {/* Hero */}
       <section className="bg-primary-900 py-16 relative overflow-hidden">
         <div className="mx-auto max-w-4xl px-4 lg:px-8 relative z-10">
@@ -38,7 +116,9 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
           <div className="flex items-center gap-6 mt-6 text-primary-200 text-sm font-medium">
             <span className="flex items-center gap-2">
               <Calendar className="w-4 h-4" />
-              {new Date(blog.published_at).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}
+              <time dateTime={blog.published_at}>
+                {new Date(blog.published_at).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}
+              </time>
             </span>
             <span className="flex items-center gap-2">
               <User className="w-4 h-4" />
@@ -67,15 +147,16 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
 
       {/* Content */}
       <section className="py-16 bg-white">
-        <div className="mx-auto max-w-4xl px-4 lg:px-8">
+        <article className="mx-auto max-w-4xl px-4 lg:px-8">
           {blog.excerpt && (
             <p className="text-xl text-gray-500 italic mb-8 leading-relaxed border-l-4 border-primary pl-6">
               {blog.excerpt}
             </p>
           )}
-          <div className="prose prose-lg max-w-none text-gray-700 leading-relaxed whitespace-pre-wrap">
-            {blog.content}
-          </div>
+          <div
+            className="prose prose-lg max-w-none text-gray-700 leading-relaxed"
+            dangerouslySetInnerHTML={{ __html: blog.content }}
+          />
 
           <div className="mt-16 pt-8 border-t border-gray-100 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
             <Link
@@ -91,7 +172,7 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
               Book Free Assessment
             </Link>
           </div>
-        </div>
+        </article>
       </section>
     </div>
   );

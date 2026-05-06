@@ -1,8 +1,25 @@
 import { MapPin, Phone, Mail, Clock } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import ContactForm from "@/components/ContactForm";
+import type { Metadata } from "next";
+import { canonicalUrl } from "@/lib/seo";
 
 export const revalidate = 3600; // ISR cache for 1 hour
+
+export const metadata: Metadata = {
+  title: "Contact Us — Book a Free Home Healthcare Assessment",
+  description:
+    "Get in touch with TrueCare Health At Home in Dehradun. Schedule a free assessment, ask about our home nursing services, or call us 24/7. We're here to help you and your loved ones.",
+  alternates: {
+    canonical: canonicalUrl("/contact"),
+  },
+  openGraph: {
+    title: "Contact TrueCare Health At Home — Dehradun",
+    description:
+      "Schedule a free, no-obligation home healthcare assessment in Dehradun. Call us, email us, or fill out our contact form.",
+    url: canonicalUrl("/contact"),
+  },
+};
 
 export default async function ContactPage() {
   const { data: settings } = await supabase.from("site_settings").select("key, value");

@@ -1,6 +1,8 @@
 import { getServices } from "@/app/actions/services";
 import Link from "next/link";
 import { ArrowRight, Activity, HeartPulse, Users, Shield, Clock, PhoneCall } from "lucide-react";
+import type { Metadata } from "next";
+import { canonicalUrl } from "@/lib/seo";
 
 // Fallback icons map
 const IconMap: Record<string, any> = {
@@ -9,9 +11,19 @@ const IconMap: Record<string, any> = {
 
 export const revalidate = 3600;
 
-export const metadata = {
-  title: "Our Services | TrueCare Health At Home",
-  description: "Comprehensive home healthcare services tailored to your needs.",
+export const metadata: Metadata = {
+  title: "Home Healthcare Services in Dehradun — Nursing, Elderly Care & More",
+  description:
+    "Explore TrueCare's comprehensive home healthcare services in Dehradun: skilled nursing, elderly care, physiotherapy, post-surgery recovery, and 24/7 medical support at home.",
+  alternates: {
+    canonical: canonicalUrl("/services"),
+  },
+  openGraph: {
+    title: "Our Home Healthcare Services — TrueCare Health At Home",
+    description:
+      "Professional home nursing, physiotherapy, elderly care, and more. Tailored care plans by certified healthcare professionals in Dehradun.",
+    url: canonicalUrl("/services"),
+  },
 };
 
 export default async function ServicesPage() {

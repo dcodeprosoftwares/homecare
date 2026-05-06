@@ -38,7 +38,7 @@ export async function createBlog(formData: FormData) {
   return { success: true };
 }
 
-export async function updateBlog(id: string, formData: FormData) {
+export async function updateBlog(id: string, formData: FormData, slug?: string) {
   const title = formData.get("title") as string;
   const content = formData.get("content") as string;
   const excerpt = formData.get("excerpt") as string;
@@ -56,15 +56,23 @@ export async function updateBlog(id: string, formData: FormData) {
 
   revalidatePath("/admin/blogs");
   revalidatePath("/blogs");
+  // Revalidate the specific blog detail page so updates appear immediately
+  if (slug) {
+    revalidatePath(`/blogs/${slug}`);
+  }
   return { success: true };
 }
 
-export async function deleteBlog(id: string) {
+export async function deleteBlog(id: string, slug?: string) {
   const { error } = await supabase.from("blogs").delete().eq("id", id);
   if (error) {
     return { error: error.message };
   }
   revalidatePath("/admin/blogs");
   revalidatePath("/blogs");
+  // Revalidate the specific blog detail page on delete
+  if (slug) {
+    revalidatePath(`/blogs/${slug}`);
+  }
   return { success: true };
 }

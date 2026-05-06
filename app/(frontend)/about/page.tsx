@@ -1,14 +1,25 @@
 import Image from "next/image";
 import { CheckCircle2, HeartPulse, Award, Shield } from "lucide-react";
 import Link from "next/link";
-
+import type { Metadata } from "next";
 import { supabase } from "@/lib/supabase";
+import { canonicalUrl } from "@/lib/seo";
 
 export const revalidate = 3600; // ISR cache for 1 hour
 
-export const metadata = {
-  title: "About Us | TrueCare Health At Home",
-  description: "Learn about our mission to provide the best home healthcare services.",
+export const metadata: Metadata = {
+  title: "About Us — Our Mission & Values",
+  description:
+    "Learn about TrueCare Health At Home's mission to provide the highest quality home healthcare in Dehradun. Licensed professionals, personalized care plans, and 24/7 availability.",
+  alternates: {
+    canonical: canonicalUrl("/about"),
+  },
+  openGraph: {
+    title: "About TrueCare Health At Home — Compassionate Home Healthcare",
+    description:
+      "Founded by healthcare professionals, TrueCare bridges the gap between hospital and home with certified staff and personalized care in Dehradun.",
+    url: canonicalUrl("/about"),
+  },
 };
 
 export default async function AboutPage() {

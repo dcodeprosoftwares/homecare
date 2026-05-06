@@ -43,7 +43,7 @@ export default function BlogsClient({ initialBlogs }: { initialBlogs: Blog[] }) 
     
     let result;
     if (editingBlog) {
-      result = await updateBlog(editingBlog.id, formData);
+      result = await updateBlog(editingBlog.id, formData, editingBlog.slug);
     } else {
       result = await createBlog(formData);
     }
@@ -57,7 +57,7 @@ export default function BlogsClient({ initialBlogs }: { initialBlogs: Blog[] }) 
 
   const handleDelete = async (id: string) => {
     if (confirm("Are you sure you want to delete this blog post?")) {
-      const result = await deleteBlog(id);
+      const result = await deleteBlog(id, initialBlogs.find(b => b.id === id)?.slug);
       if (result.error) { alert(result.error); } else { router.refresh(); }
     }
   };

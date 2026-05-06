@@ -1,12 +1,24 @@
 import { getCareers } from "@/app/actions/careers";
 import Link from "next/link";
 import { Briefcase, MapPin, Clock } from "lucide-react";
+import type { Metadata } from "next";
+import { canonicalUrl } from "@/lib/seo";
 
 export const revalidate = 3600;
 
-export const metadata = {
-  title: "Careers | TrueCare Health At Home",
-  description: "Join our team of dedicated healthcare professionals.",
+export const metadata: Metadata = {
+  title: "Careers — Join Our Home Healthcare Team in Dehradun",
+  description:
+    "Looking for healthcare jobs in Dehradun? Join TrueCare Health At Home. We're hiring nurses, caregivers, physiotherapists, and more. Make a difference every day.",
+  alternates: {
+    canonical: canonicalUrl("/career"),
+  },
+  openGraph: {
+    title: "Careers at TrueCare Health At Home — Dehradun",
+    description:
+      "Join our team of compassionate healthcare professionals in Dehradun. Browse open positions and apply today.",
+    url: canonicalUrl("/career"),
+  },
 };
 
 export default async function CareerPage() {

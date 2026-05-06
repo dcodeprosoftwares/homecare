@@ -1,10 +1,20 @@
 import { supabase } from "@/lib/supabase";
+import type { Metadata } from "next";
+import { canonicalUrl } from "@/lib/seo";
 
 export const revalidate = 3600; // ISR cache for 1 hour
 
-export const metadata = {
-  title: "Privacy Policy | TrueCare Health At Home",
-  description: "Privacy Policy for TrueCare Health At Home.",
+export const metadata: Metadata = {
+  title: "Privacy Policy",
+  description:
+    "Read the privacy policy for TrueCare Health At Home. Learn how we collect, use, and protect your personal and health information.",
+  alternates: {
+    canonical: canonicalUrl("/privacy"),
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default async function PrivacyPage() {

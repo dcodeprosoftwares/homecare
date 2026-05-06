@@ -1,12 +1,24 @@
 import { getGallery } from "@/app/actions/gallery";
 import Image from "next/image";
 import { toDirectImageUrl, isGoogleDriveUrl } from "@/lib/utils";
+import type { Metadata } from "next";
+import { canonicalUrl } from "@/lib/seo";
 
 export const revalidate = 3600;
 
-export const metadata = {
-  title: "Gallery | TrueCare Health At Home",
-  description: "View photos of our facilities, staff, and care events.",
+export const metadata: Metadata = {
+  title: "Photo Gallery — Our Care in Action",
+  description:
+    "Browse photos of TrueCare Health At Home's facilities, compassionate staff, and care events in Dehradun, Uttarakhand.",
+  alternates: {
+    canonical: canonicalUrl("/gallery"),
+  },
+  openGraph: {
+    title: "Photo Gallery — TrueCare Health At Home",
+    description:
+      "A glimpse into the care and compassion we provide every day in Dehradun.",
+    url: canonicalUrl("/gallery"),
+  },
 };
 
 export default async function GalleryPage() {
