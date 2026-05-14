@@ -4,6 +4,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { supabase } from "@/lib/supabase";
 import { canonicalUrl } from "@/lib/seo";
+import { toDirectImageUrl } from "@/lib/utils";
 
 export const revalidate = 3600; // ISR cache for 1 hour
 
@@ -75,7 +76,7 @@ export default async function AboutPage() {
             <div className="relative">
               <div className="aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl bg-gray-100 relative">
                 <Image 
-                  src={aboutImageUrl}
+                  src={toDirectImageUrl(aboutImageUrl)}
                   alt="Nurse holding patient's hands" 
                   fill
                   className="object-cover"
