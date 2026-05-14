@@ -27,7 +27,9 @@ export default async function Footer() {
             <Link href="/" className="flex items-center gap-2">
               {logoUrl ? (
                 /* eslint-disable-next-line @next/next/no-img-element */
-                <img src={toDirectImageUrl(logoUrl)} alt="TrueCare Logo" className="h-12 w-auto object-contain brightness-0 invert" />
+                <div className="bg-white/90 p-2 rounded-xl inline-block">
+                  <img src={toDirectImageUrl(logoUrl)} alt="TrueCare Logo" className="h-10 w-auto object-contain" />
+                </div>
               ) : (
                 <div className="text-2xl font-bold flex items-center text-white">
                   <span className="text-accent text-3xl mr-1">+</span> TrueCare
