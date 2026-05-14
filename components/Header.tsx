@@ -5,6 +5,7 @@ import { useState } from "react";
 import { Menu, X, PhoneCall } from "lucide-react";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
+import { toDirectImageUrl } from "@/lib/utils";
 
 const navigation = [
   { name: "Home", href: "/" },
@@ -31,7 +32,7 @@ export default function Header({ logoUrl, contactPhone }: { logoUrl?: string; co
             <span className="sr-only">TrueCare Health At Home</span>
             {logoUrl ? (
               /* eslint-disable-next-line @next/next/no-img-element */
-              <img src={logoUrl} alt="TrueCare Logo" className="h-10 w-auto object-contain" />
+              <img src={toDirectImageUrl(logoUrl)} alt="TrueCare Logo" className="h-10 w-auto object-contain" />
             ) : (
               <div className="text-2xl font-bold text-primary flex items-center">
                 <span className="text-accent text-3xl mr-1">+</span> TrueCare

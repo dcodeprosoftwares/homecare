@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Mail, MapPin, Phone } from "lucide-react";
 import { supabase } from "@/lib/supabase";
+import { toDirectImageUrl } from "@/lib/utils";
 
 export default async function Footer() {
   const { data: settings } = await supabase
@@ -26,7 +27,7 @@ export default async function Footer() {
             <Link href="/" className="flex items-center gap-2">
               {logoUrl ? (
                 /* eslint-disable-next-line @next/next/no-img-element */
-                <img src={logoUrl} alt="TrueCare Logo" className="h-12 w-auto object-contain brightness-0 invert" />
+                <img src={toDirectImageUrl(logoUrl)} alt="TrueCare Logo" className="h-12 w-auto object-contain brightness-0 invert" />
               ) : (
                 <div className="text-2xl font-bold flex items-center text-white">
                   <span className="text-accent text-3xl mr-1">+</span> TrueCare

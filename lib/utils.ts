@@ -13,7 +13,7 @@ export function toDirectImageUrl(url: string | null | undefined): string {
 
   const fileId = extractGoogleDriveFileId(url);
   if (fileId) {
-    return `https://drive.google.com/thumbnail?id=${fileId}&sz=w1600`;
+    return `https://drive.google.com/thumbnail?id=${fileId}&sz=w1000`;
   }
 
   // Not a recognized Drive link — return as-is
