@@ -1,6 +1,7 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
+import PatientChat from "@/components/PatientChat";
 import JsonLd from "@/components/JsonLd";
 import { supabase } from "@/lib/supabase";
 import {
@@ -37,6 +38,7 @@ export default async function FrontendLayout({
       <Header logoUrl={logoUrl} contactPhone={contactPhone} />
       <main className="flex-grow flex flex-col">{children}</main>
       <WhatsAppButton />
+      <PatientChat />
       <Footer />
     </>
   );
